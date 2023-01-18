@@ -2,11 +2,10 @@ import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class userRepository {
-  private repository = [];
+  public repository = [];
 
   async salvar(dados) {
-    this.repository.push(dados);
-    console.log(this.repository);
+    this.repository.push(dados);  
   }
   async listar() {
     return this.repository;
