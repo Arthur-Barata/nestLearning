@@ -1,19 +1,13 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
-import { CreateUserDto } from './dto/createUser.dto';
-import { userRepository } from './user.repository';
+import { Body, Controller, Post } from '@nestjs/common';
+import { User } from '@prisma/client';
+import { USerRequestDto } from './user.request.dto';
+import { UserService } from './user.service';
 
-@Controller('usuarios')
-export class usercontroll {
-  constructor(private userRepository: userRepository) {}
-  @Post()
-  async createUsers(@Body() userData:CreateUserDto
-  ) {
-    this.userRepository.salvar(userData);
-    console.log(userData)
-    return userData;
-  }
-  @Get()
-  async listUser() {
-    return this.userRepository.listar();
+@Controller('user')
+export class UserControll {
+  constructor(private UserService: UserService) {}
+  @Post('/create-user')
+  async createUsers(@Body() userData: USerRequestDto): Promise<User> {
+    return await this.UserService.createUser(userData);
   }
 }
